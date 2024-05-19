@@ -6,10 +6,12 @@
 1. Introduction
 
    1.1 Purpose
-       This document specifies the functional and non-functional requirements for the Svelte chatbot application. The application aims to provide users with an interactive platform to communicate with an AI chatbot using various models.
+
+      This document specifies the functional and non-functional requirements for the Svelte chatbot application. The application aims to provide users with an interactive platform to communicate with an AI chatbot using various models.
 
    1.2 Scope
-       The requirements specified in this document apply to the Svelte chatbot application, including its user interface, API communication, and overall functionality.
+   
+      The requirements specified in this document apply to the Svelte chatbot application, including its user interface, API communication, and overall functionality.
 
    1.3 Definitions, Acronyms, and Abbreviations
 
@@ -113,4 +115,3 @@
    1. Optimize the application's layout and styling for various screen sizes.
    
    1. Enhance the application's accessibility with ARIA attributes, keyboard navigation, and alternative text for images.
-   
