@@ -4,39 +4,50 @@
 ### Date: 2023-05-19
 
 1. Introduction
-   1.1 Purpose
-       The purpose of this document is to provide a detailed design overview of the Svelte chatbot application. The application allows users to interact with an AI chatbot using various models and provides a user-friendly interface for seamless communication.
+   
+   1. Purpose
+       
+      The purpose of this document is to provide a detailed design overview of the Svelte chatbot application. The application allows users to interact with an AI chatbot using various models and provides a user-friendly interface for seamless communication.
 
-   1.2 Scope
-       The scope of this document covers the architectural design, user interface, API communication, and proposed improvements for the Svelte chatbot application.
+   1. Scope
+      
+      The scope of this document covers the architectural design, user interface, API communication, and proposed improvements for the Svelte chatbot application.
 
-   1.3 Definitions, Acronyms, and Abbreviations
+   1. Definitions, Acronyms, and Abbreviations
+
        - API: Application Programming Interface
        - UI: User Interface
        - NASA: National Aeronautics and Space Administration
        - IEEE: Institute of Electrical and Electronics Engineers
 
 2. System Architecture
-   2.1 Overview
-       The Svelte chatbot application follows a client-server architecture. The client-side is built using the Svelte framework, which communicates with a server-side API to fetch available models and exchange chat messages.
+   
+   1. Overview
+      
+      The Svelte chatbot application follows a client-server architecture. The client-side is built using the Svelte framework, which communicates with a server-side API to fetch available models and exchange chat messages.
 
-   2.2 Client-Side Components
-       - App.svelte: The main component that encapsulates the entire application.
-       - Controls: Handles user input, model selection, and generating AI responses.
-       - Chat History: Displays the conversation history between the user and the AI.
-       - Markdown Support: Renders the AI's responses using the svelte-markdown component.
+   1. Client-Side Components
+      
+      - App.svelte: The main component that encapsulates the entire application.
+      - Controls: Handles user input, model selection, and generating AI responses.
+      - Chat History: Displays the conversation history between the user and the AI.
+      - Markdown Support: Renders the AI's responses using the svelte-markdown component.
 
-   2.3 Server-Side Components
-       - API Endpoints:
+   1. Server-Side Components
+      
+      - API Endpoints:
          - /api/chat: Handles the chat message exchange between the client and the AI.
          - /api/tags: Provides the list of available models for selection.
 
 3. User Interface Design
-   3.1 Layout
-       The user interface consists of the following main components:
-       - Title: Displays the application title "Chatter".
-       - Controls: Contains the user input textarea and model selection options.
-       - Chat History: Shows the conversation history between the user and the AI.
+   
+   1. Layout
+      
+      The user interface consists of the following main components:
+      
+      - Title: Displays the application title "Chatter".
+      - Controls: Contains the user input textarea and model selection options.
+      - Chat History: Shows the conversation history between the user and the AI.
 
    3.2 User Interactions
        - Model Selection: Users can click on the available models to select the desired model for the conversation.
