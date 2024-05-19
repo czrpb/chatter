@@ -13,12 +13,12 @@
 	let model;
 	let models = fetch(apiTags).then((r) => r.json());
 	let messages = [];
+	let messages_models = [];
 
 	async function generate() {
-		messages.unshift({
-            "role": "user",
-			"content": prompt
-		});
+		if (!model) {alert("No model selected."); return null;}
+		messages.push({"role": "user", "content": prompt});
+		messages_models.push(null);
 		const payload = {
             "model": model,
 			"messages": messages,
@@ -30,13 +30,28 @@
 		});
 		const response = await fetch(request);
 		var res = await response.json();
-		messages = [res['message'], ...messages];
+		messages = [...messages, res['message']];
+		messages_models = [...messages_models, model];
 		//messages.push(res['message']);
 		console.log(messages);
 		return null;
 	}
 
-	let selected;
+	async function copy_chat() {
+		await navigator.clipboard.writeText(
+			messages
+			.map( (msg, idx) => {
+				var role = msg['role'];
+				var content = msg['content'];
+				return ((role == "user") ?
+						"## Me\n\n" :
+						"## AI - " + messages_models[idx] + "\n\n"
+					   ) + content;
+			})
+			.join("\n\n\n")
+		);
+	};
+
 	let counter = 0;
 	let highlight;
 	onMount(() => {
@@ -73,10 +88,11 @@
 				{/await}
 			</div>
 		</div>
-		<div class="chat-history">
-			{#each messages as message}
-			    <h3>{#if message['role'] == 'user'}Me{:else}AI{/if}</h3>
-			    <SvelteMarkdown source={message['content']} />
+		<div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
+			{#each messages.toReversed().map((msg, idx) => [msg, messages_models.toReversed()[idx]])
+			  as message_model}
+			    <h3>{#if message_model[0]['role'] == 'user'}Me{:else}AI - {message_model[1]}{/if}</h3>
+			    <SvelteMarkdown source={message_model[0]['content']} />
 			{/each}
 		</div>
 	</div>
@@ -102,13 +118,15 @@
 		display: block;
 		margin: auto;
 		width: 80%;
+		height: 90%;
 		border-bottom: 1px solid #ccc;
-		padding-top: 35px;
+		padding-top: 15px;
 	}
 
 	.controls {
 		display: grid;
 		grid-template-columns: auto auto;
+		max-height: 25%;
 	}
 
 	.models {
@@ -130,7 +148,8 @@
 
 	.chat-history {
 		/* Add styles for chat history component */
-		height: 68vh;
+		margin-top: 3px;
+		max-height: 75%;
 		overflow-y: scroll;
 	}
 
