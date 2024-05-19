@@ -49,42 +49,55 @@
       - Controls: Contains the user input textarea and model selection options.
       - Chat History: Shows the conversation history between the user and the AI.
 
-   3.2 User Interactions
-       - Model Selection: Users can click on the available models to select the desired model for the conversation.
-       - User Input: Users can enter their messages in the provided textarea.
-       - Generate Response: Users can generate an AI response by pressing Ctrl + Enter or clicking the generate button.
-       - Copy Chat History: Users can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
+   1. User Interactions
+
+      - Model Selection: Users can click on the available models to select the desired model for the conversation.
+      - User Input: Users can enter their messages in the provided textarea.
+      - Generate Response: Users can generate an AI response by pressing Ctrl + Enter or clicking the generate button.
+      - Copy Chat History: Users can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
 
 4. API Communication
-   4.1 API Endpoints
-       - /api/chat: Accepts POST requests with the selected model and user message, and returns the AI's response.
-       - /api/tags: Returns the list of available models for selection.
+   
+   1. API Endpoints
+      
+      - /api/chat: Accepts POST requests with the selected model and user message, and returns the AI's response.
+      - /api/tags: Returns the list of available models for selection.
 
-   4.2 Request/Response Format
-       - The API uses JSON format for request and response data.
-       - The request payload includes the selected model and user message.
-       - The response payload contains the AI's generated message.
+   1. Request/Response Format
+      
+      - The API uses JSON format for request and response data.
+      - The request payload includes the selected model and user message.
+      - The response payload contains the AI's generated message.
 
 5. Proposed Improvements
-   5.1 Error Handling
-       - Implement robust error handling for API requests and display user-friendly error messages.
-       - Validate user input and provide feedback for missing or invalid data.
+   
+   1. Error Handling
+      
+      - Implement robust error handling for API requests and display user-friendly error messages.
+      - Validate user input and provide feedback for missing or invalid data.
 
-   5.2 Loading State
-       - Add a loading state indicator to provide visual feedback during API requests.
-       - Disable user input and generate button during loading to prevent multiple requests.
+   1. Loading State
+      
+      - Add a loading state indicator to provide visual feedback during API requests.
+      - Disable user input and generate button during loading to prevent multiple requests.
 
-   5.3 Scroll to Bottom
-       - Automatically scroll the chat history to the bottom when new messages are added.
+   1. Scroll to Bottom
+      
+      - Automatically scroll the chat history to the bottom when new messages are added.
 
-   5.4 Input Validation
-       - Validate and sanitize user input to prevent empty or excessively long messages.
+   1. Input Validation
+      
+      - Validate and sanitize user input to prevent empty or excessively long messages.
 
-   5.5 Responsive Design
-       - Optimize the application's layout and styling for various screen sizes using CSS media queries.
+   1. Responsive Design
+      
+      - Optimize the application's layout and styling for various screen sizes using CSS media queries.
 
-   5.6 Accessibility
-       - Enhance the application's accessibility by adding ARIA attributes, keyboard navigation, and alternative text for images.
+   1. Accessibility
+      
+      - Enhance the application's accessibility by adding ARIA attributes, keyboard navigation, and alternative text for images.
 
 6. Conclusion
+   
    The Svelte chatbot application provides a user-friendly interface for interacting with an AI chatbot. By implementing the proposed improvements, the application can be enhanced in terms of error handling, user experience, responsiveness, and accessibility. The design document serves as a guide for future development and maintenance of the application.
+   
