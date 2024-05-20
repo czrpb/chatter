@@ -14,6 +14,8 @@ Might be nice to tell me if you like this or if you use it in some way!
 
 [Design](design.md)
 
+[User Stories](user-stories.md)
+
 ## Features
 
 1. Select model from installation's known models.
