@@ -21,3 +21,7 @@ Chatter is a "quick" attempt to build a chatbot against Ollama.
 
 https://github.com/czrpb/chatter/assets/33663800/8372f9e4-cec0-480c-9f21-5d02130935f9
 
+
+
+https://github.com/czrpb/chatter/assets/33663800/92736cd8-52d6-487f-9331-8dfc54beff83
+
