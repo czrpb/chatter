@@ -83,6 +83,7 @@ Main Flow:
 Alternative Flows:
 
   3a. If no AI model is selected, the system displays an alert message "No model selected." and prompts the user to select a model.
+  
   7a. If the API request fails or returns an error, the system displays an appropriate error message to the user and logs the error for debugging purposes.
 
 Postconditions:
