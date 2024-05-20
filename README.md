@@ -2,6 +2,12 @@
 
 Chatter is a "quick" attempt to build a chatbot against Ollama.
 
+### Credit
+
+Might be nice to tell me if you like this or if you use it in some way!
+
+:stuck_out_tongue_winking_eye:
+
 ## Docs
 
 [Requirements](requirements.md)
