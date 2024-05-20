@@ -1,38 +1,19 @@
-# create-svelte
+# Chatter
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Chatter is a "quick" attempt to build a chatbot against Ollama.
 
-## Creating a project
+## Docs
 
-If you're seeing this, you've probably already done this step. Congrats!
+[Spec](specification.md)
+[Design](design.md)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Features
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+1. Select model from installation's known models.
+1. Ctrl-Enter to submit current prompt as latest message in the chat.
+1. Chat is displayed reverse, most recent prompt and reply is at top.
+1. Ctrl-Click in the chat area copies its markdown.
 
-## Developing
+## Movie
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
