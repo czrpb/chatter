@@ -87,7 +87,7 @@ graph TD
     C --> D[System highlights the selected model]
     D --> E[User enters their message]
     E --> F[User presses Ctrl + Enter or clicks the generate button]
-    F --> G[System sends a POST request to the API endpoint \"/api/chat\"]
+    F --> G[System sends a POST request to the API endpoint '/api/chat']
     G --> H[API generates an AI response]
     H --> I[API returns the AI response to the system]
     I --> J[System displays the AI response in the chat history]
