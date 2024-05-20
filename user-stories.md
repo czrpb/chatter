@@ -80,6 +80,23 @@ Main Flow:
   11. The system automatically scrolls the chat history to the bottom to show the latest message.
   12. The user can repeat steps 5-11 to continue the conversation with the AI chatbot.
 
+```mermaid
+graph TD
+    A[User opens the Svelte chatbot application] --> B[System displays the user interface]
+    B --> C[User selects an AI model]
+    C --> D[System highlights the selected model]
+    D --> E[User enters their message]
+    E --> F[User presses Ctrl + Enter or clicks the generate button]
+    F --> G[System sends a POST request to the API endpoint "/api/chat"]
+    G --> H[API generates an AI response]
+    H --> I[API returns the AI response to the system]
+    I --> J[System displays the AI response in the chat history]
+    J --> K[System automatically scrolls the chat history to the bottom]
+    K --> L{User continues the conversation?}
+    L -->|Yes| E
+    L -->|No| M[End]
+```
+
 Alternative Flows:
 
   3a. If no AI model is selected, the system displays an alert message "No model selected." and prompts the user to select a model.
