@@ -4,7 +4,8 @@ Chatter is a "quick" attempt to build a chatbot against Ollama.
 
 ## Docs
 
-[Spec](specification.md)
+[Requirements](requirements.md)
+
 [Design](design.md)
 
 ## Features
