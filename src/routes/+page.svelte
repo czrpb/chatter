@@ -15,6 +15,10 @@
 	let messages = [];
 	let messages_models = [];
 
+	function clearChat() {
+		messages = [];
+	}
+
 	async function generate() {
 		if (!model) {alert("No model selected."); return null;}
 		messages.push({"role": "user", "content": prompt});
@@ -87,6 +91,7 @@
 					{/each}
 				{/await}
 			</div>
+			<button on:click={clearChat}>Clear Chat</button>
 		</div>
 		<div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
 			{#each messages.toReversed().map((msg, idx) => [msg, messages_models.toReversed()[idx]])

@@ -48,6 +48,7 @@
       - Title: Displays the application title "Chatter".
       - Controls: Contains the user input textarea and model selection options.
       - Chat History: Shows the conversation history between the user and the AI, with the most recent messages at the top.
+      - Clear Chat: Users can clear the current chat and start a new conversation by clicking the "Clear Chat" button.
 
    1. User Interactions
 
@@ -55,6 +56,7 @@
       - User Input: Users can enter their messages in the provided textarea.
       - Generate Response: Users can generate an AI response by pressing Ctrl + Enter or clicking the generate button.
       - Copy Chat History: Users can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
+      - Clear Chat: Users can clear the current chat and start a new conversation by clicking the "Clear Chat" button.
 
 4. API Communication
    

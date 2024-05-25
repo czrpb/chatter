@@ -50,6 +50,8 @@
 
       1. The application shall support keyboard shortcuts for generating a response (Ctrl + Enter) and copying the chat history (Ctrl + Click).
 
+      1. The application shall provide a "Clear Chat" button that allows users to clear the current chat history and start a new conversation.
+
    1. Markdown Support
 
       1. The application shall use the svelte-markdown component to render the AI's responses as Markdown.

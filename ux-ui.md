@@ -42,6 +42,7 @@
       5. The AI's response is displayed at the top of the chat history, along with the user's message.
       6. User can scroll the chat history to view the entire conversation.
       7. User can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
+      8. User can clear the current chat and start a new conversation by clicking the "Clear Chat" button.
 
    2.3 Usability Principles
 
@@ -66,6 +67,7 @@
       - Chat History: Shows the conversation history between the user and the AI.
         - User Messages: Displays the user's messages with a "Me" label.
         - AI Responses: Displays the AI's responses with the selected model name.
+      - Clear Chat Button: Allows users to clear the current chat and start a new conversation.
 
    3.2 Visual Design
 
@@ -84,6 +86,7 @@
       - Iconography:
         - Generate Button: Paper plane icon
         - Copy Button: Clipboard icon
+        - Clear Chat Button: Trash can icon
 
    3.3 UI Mockup
 
@@ -101,6 +104,7 @@
       |  |                  |  | Model 5                 | |
       |  +------------------+  +-------------------------+ |
       |                                                    |
+      |                     [Clear Chat]                   |
       |  +-----------------------------------------------+ |
       |  | Me: User message 3                            | |
       |  | AI - Model 3: AI response 3                   | |
@@ -135,6 +139,10 @@
 
       - Users can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
       - The copied chat history includes the user messages and AI responses, along with their respective labels.
+
+   4.5 Clear Chat
+
+      - Users can click the "Clear Chat" button to clear the current chat history and start a new conversation.
 
 5. Accessibility Considerations
 

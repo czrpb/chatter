@@ -13,6 +13,7 @@ so that I can receive relevant and meaningful responses to my inquiries.
 4. The AI's response should be displayed at the top of the chat history, along with the user's message.
 5. The chat history should be scrollable to view the entire conversation.
 6. The user should be able to copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
+7. The user should be able to clear the current chat by clicking a "Clear Chat" button.
 
 ### Sequence Diagram
 
@@ -39,6 +40,9 @@ sequenceDiagram
 
     User->>UI: Hold Ctrl key and click on chat history
     UI-->>User: Copy entire chat history to clipboard
+
+    User->>UI: Click "Clear Chat" button
+    UI-->>User: Clear the chat history and reset the conversation
 ```
 
 In this sequence diagram:
