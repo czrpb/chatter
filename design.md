@@ -30,7 +30,7 @@
       
       - App.svelte: The main component that encapsulates the entire application.
       - Controls: Handles user input, model selection, and generating AI responses.
-      - Chat History: Displays the conversation history between the user and the AI.
+      - Chat History: Displays the conversation history between the user and the AI, with the most recent messages at the top.
       - Markdown Support: Renders the AI's responses using the svelte-markdown component.
 
    1. Server-Side Components
@@ -47,7 +47,7 @@
       
       - Title: Displays the application title "Chatter".
       - Controls: Contains the user input textarea and model selection options.
-      - Chat History: Shows the conversation history between the user and the AI.
+      - Chat History: Shows the conversation history between the user and the AI, with the most recent messages at the top.
 
    1. User Interactions
 
@@ -80,10 +80,6 @@
       
       - Add a loading state indicator to provide visual feedback during API requests.
       - Disable user input and generate button during loading to prevent multiple requests.
-
-   1. Scroll to Bottom
-      
-      - Automatically scroll the chat history to the bottom when new messages are added.
 
    1. Input Validation
       

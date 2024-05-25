@@ -10,7 +10,7 @@ so that I can receive relevant and meaningful responses to my inquiries.
 1. The user should be able to select an AI model from the available options.
 2. The user should be able to enter their message in the provided textarea.
 3. The user should be able to generate an AI response by pressing Ctrl + Enter or clicking the generate button.
-4. The AI's response should be displayed in the chat history, along with the user's message.
+4. The AI's response should be displayed at the top of the chat history, along with the user's message.
 5. The chat history should be scrollable to view the entire conversation.
 6. The user should be able to copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
 
@@ -76,7 +76,7 @@ Main Flow:
   7. The system sends a POST request to the API endpoint "/api/chat" with the user's message and the selected model.
   8. The API generates an AI response based on the user's message and the selected model.
   9. The API returns the AI response to the system.
-  10. The system displays the AI response in the chat history, along with the user's message.
+  10. The system displays the AI response at the top of the chat history, along with the user's message.
   11. The system automatically scrolls the chat history to the bottom to show the latest message.
   12. The user can repeat steps 5-11 to continue the conversation with the AI chatbot.
 

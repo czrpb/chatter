@@ -39,7 +39,7 @@
       2. User selects an AI model from the available options.
       3. User enters their message in the provided textarea.
       4. User generates an AI response by pressing Ctrl + Enter or clicking the generate button.
-      5. The AI's response is displayed in the chat history, along with the user's message.
+      5. The AI's response is displayed at the top of the chat history, along with the user's message.
       6. User can scroll the chat history to view the entire conversation.
       7. User can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
 
@@ -128,6 +128,7 @@
 
       - The chat history displays the conversation between the user and the AI.
       - User messages are labeled with "Me", and AI responses are labeled with the selected model name.
+      - The AI's response is displayed at the top of the chat history, along with the user's message.
       - The chat history is scrollable to accommodate longer conversations.
 
    4.4 Copy Functionality
