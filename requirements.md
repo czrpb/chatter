@@ -52,6 +52,8 @@
 
       1. The application shall provide a "Clear Chat" button that allows users to clear the current chat history and start a new conversation.
 
+         * While waiting for a response from the AI, the "Clear Chat" button shall change to "Chat In Progress" with the text bouncing left-to-right and right-to-left.
+
    1. Markdown Support
 
       1. The application shall use the svelte-markdown component to render the AI's responses as Markdown.
@@ -107,10 +109,6 @@
 6. Future Enhancements
    
    1. Implement error handling and user-friendly error messages.
-   
-   1. Add a loading state indicator during API requests.
-   
-   1. Automatically scroll the chat history to the bottom when new messages are added.
    
    1. Validate and sanitize user input to prevent empty or excessively long messages.
    

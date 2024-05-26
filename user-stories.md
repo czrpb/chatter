@@ -31,8 +31,10 @@ sequenceDiagram
     User->>UI: Enter message
     User->>UI: Press Ctrl + Enter or click generate button
     UI->>API: Send user message and selected model (POST /api/chat)
+    UI-->>User: Change "Clear Chat" button to "Chat In Progress" and bounce the text
     API->>API: Generate AI response
     API-->>UI: Return AI response
+    UI-->>User: Change "Chat In Progress" button back to "Clear Chat"
     UI-->>User: Display AI response in chat history
 
     User->>UI: Scroll chat history

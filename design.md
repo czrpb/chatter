@@ -57,6 +57,8 @@
       - Generate Response: Users can generate an AI response by pressing Ctrl + Enter or clicking the generate button.
       - Copy Chat History: Users can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
       - Clear Chat: Users can clear the current chat and start a new conversation by clicking the "Clear Chat" button.
+        - When not waiting for a response, the button displays "Clear Chat" and clears the chat when clicked.
+        - While waiting for a response, the button displays "Chat In Progress" with the text bouncing left-to-right and right-to-left.
 
 4. API Communication
    
@@ -80,8 +82,8 @@
 
    1. Loading State
       
-      - Add a loading state indicator to provide visual feedback during API requests.
       - Disable user input and generate button during loading to prevent multiple requests.
+      - Change the "Clear Chat" button to "Chat In Progress" with bouncing text during loading.
 
    1. Input Validation
       

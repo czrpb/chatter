@@ -38,11 +38,12 @@
       1. User opens the application.
       2. User selects an AI model from the available options.
       3. User enters their message in the provided textarea.
-      4. User generates an AI response by pressing Ctrl + Enter or clicking the generate button.
+      4. User generates an AI response by pressing `Ctrl + Enter` or clicking the generate button.
+         * User sees the "Clear Chat" button change to "Chat In Progress" with bouncing text while waiting for the AI response.
       5. The AI's response is displayed at the top of the chat history, along with the user's message.
-      6. User can scroll the chat history to view the entire conversation.
-      7. User can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
-      8. User can clear the current chat and start a new conversation by clicking the "Clear Chat" button.
+         1. User can scroll the chat history to view the entire conversation.
+         1. User can copy the entire chat history by holding the Ctrl key and clicking on the chat history area.
+         1. User can clear the current chat and start a new conversation by clicking the "Clear Chat" button.
 
    2.3 Usability Principles
 
@@ -64,10 +65,12 @@
       - Controls: Contains the user input textarea and model selection options.
         - Textarea: Allows users to enter their messages.
         - Model Selection: Displays available AI models for users to choose from.
+        - Clear Chat Button: Allows users to clear the current chat and start a new conversation.
+           - Displays "Clear Chat" when not waiting for a response.
+           - Changes to "Chat In Progress" with bouncing text while waiting for the AI response.
       - Chat History: Shows the conversation history between the user and the AI.
         - User Messages: Displays the user's messages with a "Me" label.
         - AI Responses: Displays the AI's responses with the selected model name.
-      - Clear Chat Button: Allows users to clear the current chat and start a new conversation.
 
    3.2 Visual Design
 
@@ -94,17 +97,17 @@
 
       ```
       +----------------------------------------------------+
-      |                     Chatter                        |
+      |                   Chatter                          |
       +----------------------------------------------------+
-      |  +------------------+  +-------------------------+ |
-      |  |                  |  | Model 1                 | |
-      |  |                  |  | Model 2                 | |
-      |  |     Textarea     |  | Model 3                 | |
-      |  |                  |  | Model 4                 | |
-      |  |                  |  | Model 5                 | |
-      |  +------------------+  +-------------------------+ |
+      |  +---------------------------------+ +-----------+ |
+      |  |                                 | | Model 1   | |
+      |  |                                 | | Model 2   | |
+      |  |        Textarea                 | | Model 3   | |
+      |  |                                 | | Model 4   | |
+      |  |                                 | | Model 5   | |
+      |  +---------------------------------+ +-----------+ |
+      |  [  Clear Chat / Chat In Progress  ]               |
       |                                                    |
-      |                     [Clear Chat]                   |
       |  +-----------------------------------------------+ |
       |  | Me: User message 3                            | |
       |  | AI - Model 3: AI response 3                   | |
@@ -121,7 +124,7 @@
    4.1 User Input
 
       - Users can enter their messages in the provided textarea.
-      - Pressing Ctrl + Enter or clicking the generate button triggers the AI response generation.
+      - Pressing `Ctrl + Enter` or clicking the generate button triggers the AI response generation.
 
    4.2 Model Selection
 
