@@ -14,6 +14,7 @@
 	let models = fetch(apiTags).then((r) => r.json());
 	let messages = [];
 	let messages_models = [];
+	let waiting = false;
 
 	function clearChat() {
 		messages = [];
@@ -32,8 +33,10 @@
             "method": "POST",
 			"body":  JSON.stringify(payload)
 		});
+		waiting = true;
 		const response = await fetch(request);
 		var res = await response.json();
+		waiting = false;
 		messages = [...messages, res['message']];
 		messages_models = [...messages_models, model];
 		//messages.push(res['message']);
@@ -91,7 +94,13 @@
 					{/each}
 				{/await}
 			</div>
-			<button on:click={clearChat}>Clear Chat</button>
+			<button on:click={clearChat} disabled={waiting || !messages.length}>
+				{#if waiting}
+				    <span class="bounce">Chat In Progress</span>
+				{:else}
+				    Clear Chat
+				{/if}
+			</button>
 		</div>
 		<div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
 			{#each messages.toReversed().map((msg, idx) => [msg, messages_models.toReversed()[idx]])
@@ -131,7 +140,7 @@
 	.controls {
 		display: grid;
 		grid-template-columns: auto auto;
-		max-height: 25%;
+		max-height: 30%;
 	}
 
 	.models {
@@ -154,8 +163,21 @@
 	.chat-history {
 		/* Add styles for chat history component */
 		margin-top: 3px;
-		max-height: 75%;
+		max-height: 70%;
 		overflow-y: scroll;
+	}
+
+	.bounce {
+		/* Add styles for bouncing text */
+		animation: 10s linear infinite bounce;
+		display: inline-block;
+	}
+
+	@keyframes bounce {
+		0%, 100% { transform: translateX(0); }
+		25% { transform: translateX(200%); }
+		50% { transform: translateX(0); }
+		75% { transform: translateX(-200%); }
 	}
 
 	textarea {
