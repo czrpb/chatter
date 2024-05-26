@@ -16,6 +16,8 @@ Might be nice to tell me if you like this or if you use it in some way!
 
 [User Stories](user-stories.md)
 
+[UX / UI](ux-ui.md)
+
 ## Features
 
 1. Select model from installation's known models.
