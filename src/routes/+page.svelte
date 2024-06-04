@@ -1,5 +1,7 @@
 <!-- App.svelte -->
 <script>
+    // @ts-nocheck
+
 	// Add any necessary imports
 	import { onMount } from "svelte";
 	import SvelteMarkdown from "svelte-markdown";
@@ -10,37 +12,57 @@
 	let apiTags = apiRoot + '/tags';
 
 	let prompt = 'What is Critical Realism?';
-	let model;
+	let selected_models = [];
 	let models = fetch(apiTags).then((r) => r.json());
-	let messages = [];
-	let messages_models = [];
+	let messages = {};
+	let messages_models = {};
 	let waiting = false;
 
 	function clearChat() {
-		messages = [];
+		messages = {};
+		messages_models = {};
+	}
+
+	function get_models(res) {
+		var x = res
+		.map((model) => [model['size'], model['name']]);
+
+		return x
+		.toSorted((a,b) => a[0]-b[0])
+		.map((model) => model[1]);
 	}
 
 	async function generate() {
-		if (!model) {alert("No model selected."); return null;}
-		messages.push({"role": "user", "content": prompt});
-		messages_models.push(null);
-		const payload = {
-            "model": model,
-			"messages": messages,
-            "stream": false
-        };
-		const request = new Request(apiChat, {
-            "method": "POST",
-			"body":  JSON.stringify(payload)
-		});
-		waiting = true;
-		const response = await fetch(request);
-		var res = await response.json();
-		waiting = false;
-		messages = [...messages, res['message']];
-		messages_models = [...messages_models, model];
-		//messages.push(res['message']);
-		console.log(messages);
+		if (!selected_models.length) {
+			alert("No model selected."); return null;
+		}
+		
+		selected_models.forEach(
+			async (model) => {
+				if (!messages.hasOwnProperty(model)) {
+					messages[model] = [];
+					messages_models[model] = [];
+				}
+				messages[model].push({"role": "user", "content": prompt});
+				messages_models[model].push(null);
+				const payload = {
+					"model": model,
+					"messages": messages[model],
+					"stream": false
+				};
+				const request = new Request(apiChat, {
+					"method": "POST",
+					"body":  JSON.stringify(payload)
+				});
+				waiting = true;
+				const response = await fetch(request);
+				var res = await response.json();
+				waiting = false;
+				messages[model] = [...messages[model], res['message']];
+				messages_models[model] = [...messages_models[model], model];
+			}
+		);
+
 		return null;
 	}
 
@@ -63,15 +85,18 @@
 	let highlight;
 	onMount(() => {
 		setInterval(() => {
-			Array.from(document.getElementsByClassName('model')).forEach((e) => {
-				if (e.innerText == model) {
-					counter = (counter == 360) ? 0 : counter + 1;
-					highlight = `background: linear-gradient(${counter}deg, rgba(255,0,0,0.6) 25%, rgba(0,0,255,0.6) 75%)`;
-					e.setAttribute('style', highlight);
-				} else {
-					e.setAttribute('style', '');
+			Array.from(document.getElementsByClassName('model')).forEach(
+				(e) =>
+				{
+					if (selected_models.includes(e.innerText)) {
+						counter = (counter == 360) ? 0 : counter + 1;
+						highlight = `background: linear-gradient(${counter}deg, rgba(255,0,0,0.6) 25%, rgba(0,0,255,0.6) 75%)`;
+						e.setAttribute('style', highlight);
+					} else {
+						e.setAttribute('style', '');
+					}
 				}
-			});
+			);
 		}, 750);
 	});
 </script>
@@ -87,8 +112,16 @@
 				{#await models}
 					<b>Loading models....</b>
 				{:then res}
-					{#each res['models'].map((model) => model['model'].split(":")[0]).toSorted() as name}
-						<div class="model" on:click={ () => model=name }>
+					{#each get_models(res['models']) as name, idx}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<div class="model" idx="{idx}"
+						     on:click={
+							 	() =>
+							 	(selected_models.includes(name)) ?
+								 selected_models.splice(selected_models.indexOf(name), 1) :
+								 selected_models.push(name)
+							 }>
 							{name}
 						</div>
 					{/each}
@@ -98,17 +131,25 @@
 				{#if waiting}
 				    <span class="bounce">Chat In Progress</span>
 				{:else}
-				    Clear Chat
+				    Clear **ALL** Chats
 				{/if}
 			</button>
 		</div>
-		<div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
-			{#each messages.toReversed().map((msg, idx) => [msg, messages_models.toReversed()[idx]])
-			  as message_model}
-			    <h3>{#if message_model[0]['role'] == 'user'}Me{:else}AI - {message_model[1]}{/if}</h3>
-			    <SvelteMarkdown source={message_model[0]['content']} />
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="chat-histories">
+			{#each selected_models.toSorted() as model}
+   		    	<div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
+					{#each messages[model].toReversed().map(
+				   		       (msg, idx) =>
+							     [msg, messages_models[model].toReversed()[idx]]
+				   	       ) as message_model}
+			        	<h3>{#if message_model[0]['role'] == 'user'}Me{:else}AI - {message_model[1]}{/if}</h3>
+			        	<SvelteMarkdown source={message_model[0]['content']} />
+			    	{/each}
+				</div>
 			{/each}
-		</div>
+	    </div>
 	</div>
 </div>
 
@@ -160,10 +201,18 @@
 		border: 1px solid red;
 	}
 
-	.chat-history {
-		/* Add styles for chat history component */
+	.chat-histories {
+		display: grid;
+    	grid-template-columns: repeat(auto-fill, 1fr);
+    	grid-gap: 20px;
 		margin-top: 3px;
 		max-height: 70%;
+		overflow: scroll;
+	}
+
+	.chat-history {
+		/* Add styles for chat history component */
+		overflow-x: hidden;
 		overflow-y: scroll;
 	}
 

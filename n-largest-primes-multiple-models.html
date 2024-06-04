@@ -1,0 +1,93 @@
+<table>
+<tr>
+<td valign="top" width="33%">
+<h2>AI - codellama:7b</h2>
+
+<p>Here is a function that returns the N largest primes between two given values:</p>
+<br/>
+<pre>
+def get_n_largest_primes(start, end, n):
+    primes = []
+    for i in range(start, end+1):
+        if is_prime(i):
+            primes.append(i)
+    return sorted(primes)[-n:]
+</pre>
+<br/>
+<p>This function takes three arguments: start, the lower bound of the range of numbers to check for primality; end, the upper bound of the range; and n, the number of prime numbers to return. It uses a simple loop to iterate over the range, checking each number using the is_prime function. If a number is prime, it is added to the list of primes. Finally, the list of primes is sorted in descending order and the last n elements are returned.</p>
+<br/>
+<p>Here is an example usage:</p>
+<br/>
+<pre>
+print(get_n_largest_primes(10, 20, 3))
+# Output: [17, 19, 23]
+</pre>
+<br/>
+<p>This would return the three largest prime numbers between 10 and 20 (inclusive).</p>
+
+<h3>Me</h3>
+
+<p>Please write me a function to return the N-largest primes between 2 values.</p>
+</td>
+<td valign="top" width="33%">
+<h2>AI - granite-code:3b</h2>
+
+<p>Here's how you could do it:</p>
+<br/>
+<pre>
+def get_n_largest_primes(start, end, n):
+    primes = []
+
+    for num in range(start, end + 1):
+        if num > 1:
+            is_prime = True
+            for i in range(2, int(num ** 0.5) + 1):
+                if num % i == 0:
+                    is_prime = False
+                    break
+
+            if is_prime:
+                primes.append(num)
+
+    return sorted(primes)[-n:]
+</pre>
+<br/>
+<p>This function takes three arguments: the starting value, the ending value, and the number of largest prime numbers you want to find. It iterates through all numbers between start and end, checking if they are prime using a simple primality test. If a number is prime, it's added to a list of primes. The function then sorts the list in descending order and returns the first n elements as the N-largest prime numbers.</p>
+
+<h3>Me</h3>
+
+<p>Please write me a function to return the N-largest primes between 2 values.</p>
+</td>
+<td valign="top" width="33%">
+<h2>AI - granite-code:8b</h2>
+
+<p>Sure, here's an example implementation in Python:</p>
+<br/>
+<pre>
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def largest_primes(start, end, count):
+    primes = []
+    current_count = 0
+
+    for n in range(start, end + 1):
+        if is_prime(n):
+            primes.append(n)
+            current_count += 1
+            if current_count > count:
+                break
+
+    return sorted(primes, reverse=True)
+</pre>
+
+<h3>Me</h3>
+
+<p>Please write me a function to return the N-largest primes between 2 values.</p>
+</td></tr>
+</table>

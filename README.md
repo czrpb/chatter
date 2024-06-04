@@ -30,6 +30,8 @@ Might be nice to tell me if you like this or if you use it in some way!
 
 1. Get ollama
    1. Get a model
+      * `ollama run codellama:7b`
+      * `ollama run codegemma:latest`
    1. Start it: `ollama serve`
 1. Get node
 1. Get this code
