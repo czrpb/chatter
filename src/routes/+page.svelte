@@ -37,6 +37,13 @@
 			alert("No model selected."); return null;
 		}
 		
+		var gtc = "100%";
+		if (selected_models.length > 1) { gtc = "48% ".repeat(selected_models.length); }
+		document
+		    .querySelector("div.chat-histories")
+			.style["grid-template-columns"] = gtc;
+
+		waiting = true;
 		selected_models.forEach(
 			async (model) => {
 				if (!messages.hasOwnProperty(model)) {
@@ -54,7 +61,6 @@
 					"method": "POST",
 					"body":  JSON.stringify(payload)
 				});
-				waiting = true;
 				const response = await fetch(request);
 				var res = await response.json();
 				waiting = false;
@@ -127,7 +133,7 @@
 					{/each}
 				{/await}
 			</div>
-			<button on:click={clearChat} disabled={waiting || !messages.length}>
+			<button on:click={clearChat} disabled={waiting || !Object.keys(messages).length}>
 				{#if waiting}
 				    <span class="bounce">Chat In Progress</span>
 				{:else}
@@ -203,8 +209,8 @@
 
 	.chat-histories {
 		display: grid;
-    	grid-template-columns: repeat(auto-fill, 1fr);
-    	grid-gap: 20px;
+    	/* grid-template-columns: repeat(auto-fill, 1fr); */
+    	grid-gap: 10px;
 		margin-top: 3px;
 		max-height: 70%;
 		overflow: scroll;

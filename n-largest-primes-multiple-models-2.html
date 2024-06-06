@@ -1,0 +1,138 @@
+<table>
+    <tr>
+        <th colspan="4"><center>
+            Me
+
+            <p>Please write me a python function to find the N-largest primes between 2 values.</p>
+        </center></th>
+    </tr>
+    <tr>
+    <th>AI - codellama:7b</th>
+    <th>AI - codeqwen:7b</th>
+    <th>AI - granite-code:3b</th>
+    <th>AI - granite-code:8b</th>
+    </tr>
+    <tr>
+        <td valign="top">
+<pre>
+import math
+
+def get_n_largest_primes(start, end, n):
+    """
+    Returns the N largest prime numbers between start and end.
+
+    Args:
+        start (int): The starting value of the range.
+        end (int): The ending value of the range.
+        n (int): The number of prime numbers to return.
+
+    Returns:
+        list: A list of N largest prime numbers between start and end.
+
+    Examples:
+        get_n_largest_primes(1, 100, 5)
+        # [23, 47, 79, 97]
+    """
+    primes = []
+    for i in range(start, end+1):
+        if is_prime(i):
+            primes.append(i)
+        return sorted(primes, reverse=True)[:n]
+        
+def is_prime(n):
+    """
+    Returns True if n is a prime number.
+
+    Args:
+        n (int): The number to check.
+
+    Returns:
+        bool: Whether n is a prime number.
+
+    Examples:
+        is_prime(2)
+        # True
+
+        is_prime(3)
+        # True
+
+        is_prime(4)
+        # False
+    """
+    return n > 1 and all(n % i for i in range(2, int(math.sqrt(n))+1))
+</pre></td>
+<td valign="top">
+<p>Sure, here's an example Python function that uses the Sieve of Eratosthenes algorithm to generate all prime numbers within a given range and then returns the N largest primes:</p>
+
+<pre>
+import math
+
+def sieve_of_eratosthenes(start, end):
+    primes = [True] * (end+1)
+    p = 2
+    while p*p <= end:
+        if primes[p]:
+            for i in range(p*p, end+1, p):
+                primes[i] = False
+        p += 1
+    return [p for p in range(start, end) if primes[p]]
+
+def n_largest_primes(start, end, N):
+    if start > end:
+        start, end = end, start
+    primes = sieve_of_eratosthenes(start, end)
+    return sorted(primes, reverse=True)[:N]
+
+# Example usage:
+n = 10  # Number of largest primes to return
+start = 100  # Starting value of range
+end = 200  # Ending value of range
+largest_primes = n_largest_primes(start, end, n)
+print(f"The {n} largest prime numbers between {start} and {end} are: {largest_primes}")
+</pre>
+
+<p>This function first generates all prime numbers within the given range using the Sieve of Eratosthenes algorithm. It then returns a sorted list containing the N largest primes, in descending order. Note that this implementation assumes that start is less than or equal to end, and if not it swaps them.</p>
+</td>
+<td valign="top">
+<p>Here's how you could do it:</p>
+
+<pre>
+import math
+
+def n_largest_primes(start, end, n):
+    primes = []
+    for num in range(start, end + 1):
+        if is_prime(num):
+            primes.append(num)
+            if len(primes) == n:
+                return primes
+    return primes
+
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(math.sqrt(num)) + 1):
+        if num % i == 0:
+            return False
+    return True
+</pre>
+</td>
+<td valign="top">
+<p>Sure! Here's an example of how you can use Python and the sympy library to find the N largest prime numbers between two given values:</p>
+
+<pre>
+from sympy import isprime, sieve
+
+def find_n_largest_primes(lower_bound, upper_bound, n):
+    # Create a Sieve object to generate prime numbers up to the upper bound
+    primes = list(sieve.primerange(lower_bound, upper_bound + 1))
+
+    # Sort the prime numbers in descending order
+    primes.sort(reverse=True)
+
+    # Return the first N largest prime numbers
+    return primes[:n]
+</pre>
+</td>
+    </tr>
+</table>
