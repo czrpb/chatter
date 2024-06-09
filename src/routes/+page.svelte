@@ -18,7 +18,18 @@
 	let messages_models = {};
 	let waiting = false;
 
+	function date_now() {
+		const date = new Date(Date.now());
+	    return date.toLocaleDateString(
+			'en-US',
+			{ year: 'numeric', month: '2-digit', day: '2-digit' }) + '-' + 
+                date.toTimeString().substring(0, 8);
+	}
+
 	function clearChat() {
+		document
+		    .querySelector("div.chat-histories")
+			.innerHTML = "";
 		messages = {};
 		messages_models = {};
 	}
@@ -150,7 +161,7 @@
 				   		       (msg, idx) =>
 							     [msg, messages_models[model].toReversed()[idx]]
 				   	       ) as message_model}
-			        	<h3>{#if message_model[0]['role'] == 'user'}Me{:else}AI - {message_model[1]}{/if}</h3>
+			        	<h3>{#if message_model[0]['role'] == 'user'}Me{:else}AI - {message_model[1]}({date_now()}){/if}</h3>
 			        	<SvelteMarkdown source={message_model[0]['content']} />
 			    	{/each}
 				</div>
