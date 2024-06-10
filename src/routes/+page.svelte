@@ -27,9 +27,11 @@
 	}
 
 	function clearChat() {
-		document
-		    .querySelector("div.chat-histories")
-			.innerHTML = "";
+		document.querySelector("div.chat-histories").innerHTML = "";
+
+			// document
+		    // .querySelectorAll("div.chat-histories div")
+			// .forEach( (d) => { d.innerHTML = "" } );
 		messages = {};
 		messages_models = {};
 	}
@@ -155,17 +157,16 @@
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div class="chat-histories">
-			{#each selected_models.toSorted() as model}
-   		    	<div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
-					{#each messages[model].toReversed().map(
-				   		       (msg, idx) =>
-							     [msg, messages_models[model].toReversed()[idx]]
-				   	       ) as message_model}
-			        	<h3>{#if message_model[0]['role'] == 'user'}Me{:else}AI - {message_model[1]}({date_now()}){/if}</h3>
-			        	<SvelteMarkdown source={message_model[0]['content']} />
-			    	{/each}
-				</div>
-			{/each}
+			{#key [selected_models, messages, messages_models]}
+			    {#each selected_models.toSorted() as model}
+			        <div class="chat-history" on:click={ (e) => { e.ctrlKey && copy_chat(); } }>
+				        {#if messages.hasOwnProperty(model)} {#each messages[model].toReversed() as msg, idx}
+					        <h3>{#if msg['role'] == 'user'}Me{:else}AI - {messages_models[model].toReversed()[idx]} ({date_now()}){/if}</h3>
+			        	    <SvelteMarkdown source={msg['content']} />
+				        {/each} {/if}
+			        </div>
+			    {/each}
+			{/key}
 	    </div>
 	</div>
 </div>
@@ -202,9 +203,9 @@
 	}
 
 	.models {
-		grid-column: 2 /2;
-		display: block;
-		overflow-y: scroll;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		grid-gap: 3px;
 		margin-top: 1px;
 		margin-left: 5px;
 	}
