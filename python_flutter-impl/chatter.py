@@ -24,15 +24,8 @@ def bot_chat(bot, prompt):
     match bot:
         case {"client": client, "model": model}:
             bot["messages"].append({"role": "user", "content": prompt})
-            print("======  BEFORE ===============")
-            pprint.pprint(bot["messages"])
-            print("======  BEFORE ===============")
             response = client.chat(model=model, messages=bot["messages"], stream=False)
-            pprint.pprint(response)
             bot["messages"].append({"role": response["message"]["role"], "content": response["message"]["content"]})
-            print("======  AFTER ===============")
-            pprint.pprint(bot["messages"])
-            print("======  AFTER ===============")
             return bot
     raise RuntimeError(f"Bot invalid:\n{bot}")
 
