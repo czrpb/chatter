@@ -24,3 +24,5 @@ Here is a version of `Chatter` implemented in Python with the following librarie
 ```
 
 The section that displays the Chat should be in reverse order, meaning the user's most recent prompt and the LLMs reply should be first. Also, it should be scrollable.
+
+![Chatter UI](Chatter.png)
