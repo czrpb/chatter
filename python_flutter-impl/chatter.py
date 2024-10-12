@@ -2,6 +2,7 @@ import flet as ft
 import ollama
 import requests
 import json
+import pprint
 
 def bot_new(ollama_host):
     return {
@@ -23,9 +24,15 @@ def bot_chat(bot, prompt):
     match bot:
         case {"client": client, "model": model}:
             bot["messages"].append({"role": "user", "content": prompt})
-            response = client.chat(model=model, messages=messages)
-            reply = response['message']['content']
-            bot["messages"].append({"role": "assistant", "content": reply})
+            print("======  BEFORE ===============")
+            pprint.pprint(bot["messages"])
+            print("======  BEFORE ===============")
+            response = client.chat(model=model, messages=bot["messages"], stream=False)
+            pprint.pprint(response)
+            bot["messages"].append({"role": response["message"]["role"], "content": response["message"]["content"]})
+            print("======  AFTER ===============")
+            pprint.pprint(bot["messages"])
+            print("======  AFTER ===============")
             return bot
     raise RuntimeError(f"Bot invalid:\n{bot}")
 
@@ -38,42 +45,39 @@ def main(page: ft.Page):
         if not ollama_host_input.value:
             return
         try:
+            nonlocal chatbot
             chatbot = bot_connect(bot_new(ollama_host_input.value))
-
             status_text.value = f"Connected to {chatbot["ollama_host"]}"
             
             # Fetch and populate the model list
             bot_load_models(chatbot)
             model_dropdown.options = [ft.dropdown.Option(model) for model in chatbot["models"]]
             model_dropdown.disabled = False            
-            page.update()
-
         except Exception as ex:
             status_text.value = f"Failed to connect or fetch models: {str(ex)}"
-            page.update()
+
+        page.update()
 
     def on_model_change(e):
-        chatbot.model = model_dropdown.value
+        chatbot["model"] = model_dropdown.value
         user_input.disabled = False
+
         page.update()
 
     def on_chat_submit(e):
-        print("SUBMITTING input")
-        if not user_input.value:
-            return
         user_message = user_input.value
         user_input.value = ""
 
-        response = chatbot.chat(user_message)
-        print(response)
-        chat_messages.controls.append(ft.Text(f"You: {user_message}"))
-        chat_messages.controls.append(ft.Markdown(response))
-        
+        bot_chat(chatbot, user_message)
+
+        chat_messages.controls.insert(0, ft.Divider(height=10, thickness=7, color=ft.colors.DEEP_ORANGE_200))
+        chat_messages.controls.insert(0, ft.Markdown(f"### LLM {chatbot["model"]}\n\n{chatbot["messages"][-1]["content"]}"))
+        chat_messages.controls.insert(0, ft.Markdown(f"## You\n> {chatbot["messages"][-2]["content"]}"))
         page.update()
 
     ollama_host_input = ft.TextField(
         label="Ollama Host",
-        hint_text="192.168.50.247",
+        hint_text="localhost OR 192.168.50.247",
         on_submit=on_ollama_host_submit
     )
 
