@@ -17,6 +17,7 @@ Here is a version of `Chatter` implemented in Python with the following librarie
 | +-----------------------------+            |
 | |   <Prompt Multiline Input>  |            |
 | +-----------------------------+            |
+| (<Copy>) (<Clear>)                         |
 | +-----------------------------+            |
 | | <Chat in Most Recent First> |            |
 | +-----------------------------+            |

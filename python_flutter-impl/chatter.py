@@ -3,6 +3,7 @@ import ollama
 import requests
 import json
 import pprint
+from operator import setitem
 
 def bot_new(ollama_host):
     return {
@@ -44,18 +45,33 @@ def main(page: ft.Page):
             
             # Fetch and populate the model list
             bot_load_models(chatbot)
-            model_dropdown.options = [ft.dropdown.Option(model) for model in chatbot["models"]]
-            model_dropdown.disabled = False            
+
+            model_list.controls = [
+                ft.TextButton(model, on_click=(lambda model: (lambda e: on_model_change(model)))(model))
+                for model in chatbot["models"]
+            ]
+
         except Exception as ex:
             status_text.value = f"Failed to connect or fetch models: {str(ex)}"
 
         page.update()
 
-    def on_model_change(e):
-        chatbot["model"] = model_dropdown.value
+    def on_model_change(model):
+        print(model)
+        chatbot["model"] = model
         user_input.disabled = False
 
+        pprint.pprint(chatbot)
         page.update()
+
+    def on_clear(e):
+        chatbot["messages"].clear()
+        chat_messages.controls.clear()
+        clear_button.disabled = True
+        page.update()
+
+    def on_copy(e):
+        pass
 
     def on_chat_submit(e):
         user_message = user_input.value
@@ -66,6 +82,9 @@ def main(page: ft.Page):
         chat_messages.controls.insert(0, ft.Divider(height=10, thickness=7, color=ft.colors.DEEP_ORANGE_200))
         chat_messages.controls.insert(0, ft.Markdown(f"### LLM {chatbot["model"]}\n\n{chatbot["messages"][-1]["content"]}"))
         chat_messages.controls.insert(0, ft.Markdown(f"## You\n> {chatbot["messages"][-2]["content"]}"))
+
+        clear_button.disabled = False
+
         page.update()
 
     ollama_host_input = ft.TextField(
@@ -76,12 +95,7 @@ def main(page: ft.Page):
 
     status_text = ft.Text("")
 
-    model_dropdown = ft.Dropdown(
-        label="Choose a model",
-        options=[],  # Will be populated dynamically
-        disabled=True,
-        on_change=on_model_change
-    )
+    model_list = ft.ListView(expand=True)
 
     user_input = ft.TextField(
         label="Your input to the LLM",
@@ -91,16 +105,27 @@ def main(page: ft.Page):
         max_lines=5,
         on_submit=on_chat_submit,
         shift_enter=True,
+        expand=True,
         disabled=True
     )
+
+    clear_button = ft.ElevatedButton("Clear", on_click=on_clear, disabled=True)
+    copy_button = ft.ElevatedButton("Copy", on_click=on_copy, disabled=True)
 
     chat_messages = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
 
     page.add(
         ft.Row([ollama_host_input, ft.ElevatedButton("Connect", on_click=on_ollama_host_submit)]),
         status_text,
-        model_dropdown,
-        user_input,
+        ft.Row([
+            ft.Container(
+                content=model_list,
+                height=100,
+                width=250,
+                border=ft.border.all(1, ft.colors.OUTLINE)
+            ),
+            user_input]),
+        ft.Row([copy_button, clear_button]),
         ft.Container(
             content=chat_messages,
             border=ft.border.all(1, ft.colors.OUTLINE),
