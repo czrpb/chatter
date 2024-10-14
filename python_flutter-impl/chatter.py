@@ -41,7 +41,7 @@ def main(page: ft.Page):
         try:
             nonlocal chatbot
             chatbot = bot_connect(bot_new(ollama_host_input.value))
-            status_text.value = f"Connected to {chatbot["ollama_host"]}"
+            status_text.value = f"Connected to {chatbot["ollama_host"]} |"
             
             # Fetch and populate the model list
             bot_load_models(chatbot)
@@ -57,11 +57,10 @@ def main(page: ft.Page):
         page.update()
 
     def on_model_change(model):
-        print(model)
         chatbot["model"] = model
         user_input.disabled = False
+        status_text.value = status_text.value[:status_text.value.index("|")+1] + f" Model {model} selected"
 
-        pprint.pprint(chatbot)
         page.update()
 
     def on_clear(e):
@@ -71,7 +70,11 @@ def main(page: ft.Page):
         page.update()
 
     def on_copy(e):
-        pass
+        page.set_clipboard(
+            "\n\n====================\n\n".join(
+                [f"[{message["role"]}]\n\n{message["content"]}" for message in chatbot["messages"]]
+            )
+        )
 
     def on_chat_submit(e):
         user_message = user_input.value
@@ -83,12 +86,14 @@ def main(page: ft.Page):
         chat_messages.controls.insert(0, ft.Markdown(f"### LLM {chatbot["model"]}\n\n{chatbot["messages"][-1]["content"]}"))
         chat_messages.controls.insert(0, ft.Markdown(f"## You\n> {chatbot["messages"][-2]["content"]}"))
 
+        copy_button.disabled = False
         clear_button.disabled = False
 
         page.update()
 
     ollama_host_input = ft.TextField(
         label="Ollama Host",
+        width=250,
         hint_text="localhost OR 192.168.50.247",
         on_submit=on_ollama_host_submit
     )
@@ -115,8 +120,7 @@ def main(page: ft.Page):
     chat_messages = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
 
     page.add(
-        ft.Row([ollama_host_input, ft.ElevatedButton("Connect", on_click=on_ollama_host_submit)]),
-        status_text,
+        ft.Row([ollama_host_input, status_text]),
         ft.Row([
             ft.Container(
                 content=model_list,
