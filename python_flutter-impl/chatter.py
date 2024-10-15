@@ -34,6 +34,7 @@ def main(page: ft.Page):
     page.title = "Chatter"
     page.vertical_alignment = ft.MainAxisAlignment.START
     chatbot = None
+    previous_button = None
 
     def on_ollama_host_submit(e):
         if not ollama_host_input.value:
@@ -46,21 +47,34 @@ def main(page: ft.Page):
             # Fetch and populate the model list
             bot_load_models(chatbot)
 
-            model_list.controls = [
-                ft.TextButton(model, on_click=(lambda model: (lambda e: on_model_change(model)))(model))
-                for model in chatbot["models"]
-            ]
+            for model in chatbot["models"]:
+                but = ft.FilledButton(model)
+                but.style = ft.ButtonStyle(
+                    color=ft.colors.BLACK,
+                    bgcolor=ft.colors.WHITE
+                )
+                but.on_click = (lambda model, but: (lambda _: on_model_change(model, but)))(model, but)
+                model_list.controls.append(but)
 
         except Exception as ex:
             status_text.value = f"Failed to connect or fetch models: {str(ex)}"
 
         page.update()
 
-    def on_model_change(model):
+    def on_model_change(model, da_button):
+        nonlocal previous_button
+        
         chatbot["model"] = model
         user_input.disabled = False
-        status_text.value = status_text.value[:status_text.value.index("|")+1] + f" Model {model} selected"
 
+        if previous_button:
+            previous_button.style.color = ft.colors.BLACK
+            previous_button.style.bgcolor = ft.colors.WHITE
+        da_button.style.color = ft.colors.WHITE
+        da_button.style.bgcolor = ft.colors.BLACK
+        previous_button = da_button
+
+        status_text.value = status_text.value[:status_text.value.index("|")+1] + f" Model {model} selected"
         page.update()
 
     def on_clear(e):
