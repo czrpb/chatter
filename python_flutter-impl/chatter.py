@@ -33,6 +33,12 @@ def bot_chat(bot, prompt):
 def main(page: ft.Page):
     page.title = "Chatter"
     page.vertical_alignment = ft.MainAxisAlignment.START
+
+    def keypress(e):
+        if (e.ctrl and e.key == "Q"):
+            page.window.close()
+    page.on_keyboard_event = keypress
+
     chatbot = None
     previous_button = None
 
@@ -63,7 +69,7 @@ def main(page: ft.Page):
 
     def on_model_change(model, da_button):
         nonlocal previous_button
-        
+
         chatbot["model"] = model
         user_input.disabled = False
 
